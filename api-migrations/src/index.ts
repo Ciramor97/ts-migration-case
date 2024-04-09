@@ -74,6 +74,10 @@ export default defineHook(({ action }, hookExtensionContext) => {
         ].sort((a, b) => (a.version > b.version ? 1 : -1));
       }
 
+      function getName(filename: string) {
+        return filename.split('-').slice(1).join(' ').split('.')[0]
+      }
+
       function parseFileName(fileName: string, custom = false) {
         const version = fileName.split('-')[0] || '-1';
         return {
@@ -81,7 +85,7 @@ export default defineHook(({ action }, hookExtensionContext) => {
             custom ? customerMigrationsFolderPath : migrationsFolderPath,
             fileName
           ),
-          name: fileName.split('-').slice(1).join(' ').split('.')[0],
+          name: getName(fileName),
           version: version,
           completed: !!completedMigrations.find(
             (migration) => migration.version === version

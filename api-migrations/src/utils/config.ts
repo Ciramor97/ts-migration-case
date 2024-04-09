@@ -1,20 +1,21 @@
 import { AuthorizationHeader } from './types';
+import {  EnvVariable} from './constants';
 
-export function getConnectionHeaders(): AuthorizationHeader | undefined {
+ function getConnectionHeaders(): AuthorizationHeader | undefined {
   return { Authorization: `Bearer xxx` };
 }
 
-export function getCustomerName() {
-  return getMandatoryEnvVar('HF_CUSTOMER_NAME');
+ function getCustomerName() {
+  return getMandatoryEnvVar(EnvVariable.HF_CUSTOMER_NAME);
 }
 
-export function buildConnectionUrlFromEnvVariables() {
-  const host = getMandatoryEnvVar('HOST');
-  const port = getMandatoryEnvVar('PORT');
+ function buildConnectionUrlFromEnvVariables() {
+  const host = getMandatoryEnvVar(EnvVariable.HOST);
+  const port = getMandatoryEnvVar(EnvVariable.PORT);
   return buildConnectionUrl(host, port);
 }
 
-export function buildConnectionUrl(
+ function buildConnectionUrl(
   host: string,
   port: string,
   protocol: 'http' | 'https' = 'http'
@@ -42,3 +43,5 @@ function getMandatoryEnvVar(
     throw new Error(msg || `Environment variable ${name} is not a string`);
   return value;
 }
+
+export {getConnectionHeaders, getCustomerName, buildConnectionUrl,buildConnectionUrlFromEnvVariables}

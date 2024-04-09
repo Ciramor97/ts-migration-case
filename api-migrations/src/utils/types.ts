@@ -1,15 +1,17 @@
-export type MyMigrationsUp = (
+ import {UserStatus} from './constants'
+ 
+ type MyMigrationsUp = (
   url: string,
   headers: AuthorizationHeader
 ) => Promise<void>;
 
-export type MyMigrations = {
-  version?: string | undefined;
-  name?: string | undefined;
-  timestamp?: string | null | undefined;
+ type MyMigrations = {
+  version?: string ;
+  name?: string ;
+  timestamp?: string | null;
 };
 
-export type MigrationFile = Pick<
+ type MigrationFile = Pick<
   MyMigrations,
   'name' | 'version'
 > & {
@@ -18,10 +20,10 @@ export type MigrationFile = Pick<
   completed: boolean;
 };
 
-export type AuthorizationHeader = {
+ type AuthorizationHeader = {
   Authorization: string;
 };
-export interface components {
+ interface components {
   schemas: {
     Rights: {
       /** Unique identifier for the role. */
@@ -53,9 +55,11 @@ export interface components {
       /** What theme the user is using. */
       theme?: 'light' | 'dark' | 'auto';
       /** Status of the user. */
-      status?: 'active' | 'invited' | 'draft' | 'suspended' | 'deleted';
+      status?: UserStatus;
     };
   }
 }
 
-export type MyUsers = components['schemas']['Users'];
+ type MyUsers = components['schemas']['Users'];
+
+ export type { MyUsers ,AuthorizationHeader, components, MigrationFile, MyMigrations, MyMigrationsUp};
